@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Orchid\Screen\AsSource;
+use Orchid\Filters\Filterable;
+use Orchid\Attachment\Attachable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
     use HasFactory;
+    use AsSource, Filterable, Attachable;
 
     protected $fillable = [
         'name',
@@ -29,6 +33,8 @@ class Course extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'course_id', 'user_id', 'enrollments')->withPivot(['status_id']);
+        return $this->belongsToMany(User::class, 'course_id', 'user_id', 'enrollments')->using(Enrollment::class)->withPivot(['status_id']);
     }
+
+
 }

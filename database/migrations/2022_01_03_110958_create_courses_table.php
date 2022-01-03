@@ -20,6 +20,7 @@ class CreateCoursesTable extends Migration
             $table->decimal('price');
             $table->foreignId('institution_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+            $table->string('image')->nullable();
         });
     }
 
