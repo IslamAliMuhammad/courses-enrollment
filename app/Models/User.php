@@ -68,4 +68,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Course::class, 'user_id', 'course_id', 'enrollments')->using(Enrollment::class)->withPivot(['status_id']);
     }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
 }

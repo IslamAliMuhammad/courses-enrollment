@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,6 +19,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             EnrollmentStatusSeeder::class,
+        ]);
+
+        User::create([
+            'name' => 'Student',
+            'email' => 'student@student.com',
+            'password' => Hash::make('01143101020'),
         ]);
     }
 }

@@ -20,6 +20,8 @@ class Enrollment extends Model
         'enrollment_status_id',
     ];
 
+
+
     public function user()
     {
         return $this->belongsTo(User::class);

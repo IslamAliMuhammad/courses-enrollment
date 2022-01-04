@@ -17,12 +17,18 @@ class Course extends Model
         'name',
         'description',
         'price',
-        'institution_id'
+        'institution_id',
+        'discipline_id'
     ];
 
-    public function desciplines()
+    public function getPrice()
     {
-        return $this->belongsToMany(Discipline::class);
+        return $this->price ? '$'.number_format($this->price, 2) : 'FREE';
+    }
+
+    public function discipline()
+    {
+        return $this->belongsTo(Discipline::class);
 
     }
 
@@ -31,10 +37,27 @@ class Course extends Model
         return $this->belongsTo(Institution::class);
     }
 
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'course_id', 'user_id', 'enrollments')->using(Enrollment::class)->withPivot(['status_id']);
     }
 
-
+    public function scopeSearchResults($query)
+    {
+        $query->when(request('discipline'), function($query) {
+                $query->whereHas('discipline', function($query) {
+                    $query->whereId(request('discipline'));
+                });
+            })
+            ->when(request('institution'), function($query) {
+                $query->whereHas('institution', function($query) {
+                    $query->whereId(request('institution'));
+                });
+            });
+    }
 }

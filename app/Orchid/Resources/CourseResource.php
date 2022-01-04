@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Resources;
 
+use App\Models\Discipline;
 use Orchid\Screen\TD;
 use Orchid\Screen\Sight;
 use Orchid\Crud\Resource;
@@ -49,6 +50,9 @@ class CourseResource extends Resource
             Relation::make('institution_id')
             ->fromModel(Institution::class, 'name')
             ->title('Choose your institution'),
+            Relation::make('discipline_id', 'discipline')
+            ->fromModel(Discipline::class, 'name')
+            ->title('Choose your disciplines'),
             Picture::make('image'),
         ];
     }
